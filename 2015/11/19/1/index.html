@@ -1,0 +1,681 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="QuartZ2D," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="一. 简单做一个画板&amp;nbsp;
+1. 建立一个UIView类
+2. 在.m里建立一个延展
+3. 分别定义一个起点, 一个终点的结构体属性 . 在建立一个存储路径的数组
+&amp;nbsp;
+@interface DrawView (){    CGPoint _startPoint;    CGPoint _endPoint;}@property (nonatomic, strong) NSMutabl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="QuartZ2D __ 简单用法 1">
+<meta property="og:url" content="http://yoursite.com/2015/11/19/1/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一. 简单做一个画板&amp;nbsp;
+1. 建立一个UIView类
+2. 在.m里建立一个延展
+3. 分别定义一个起点, 一个终点的结构体属性 . 在建立一个存储路径的数组
+&amp;nbsp;
+@interface DrawView (){    CGPoint _startPoint;    CGPoint _endPoint;}@property (nonatomic, strong) NSMutabl">
+<meta property="og:updated_time" content="2016-04-19T14:01:35.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="QuartZ2D __ 简单用法 1">
+<meta name="twitter:description" content="一. 简单做一个画板&amp;nbsp;
+1. 建立一个UIView类
+2. 在.m里建立一个延展
+3. 分别定义一个起点, 一个终点的结构体属性 . 在建立一个存储路径的数组
+&amp;nbsp;
+@interface DrawView (){    CGPoint _startPoint;    CGPoint _endPoint;}@property (nonatomic, strong) NSMutabl">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> QuartZ2D __ 简单用法 1 | Hexo </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Hexo</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">郭亚</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                QuartZ2D __ 简单用法 1
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-11-19T21:57:59+08:00" content="2015-11-19">
+              2015-11-19
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p></p><p>一. 简单做一个画板&nbsp;</p><p></p>
+<p></p><p>1. 建立一个UIView类</p><p></p>
+<p></p><p>2. 在.m里建立一个延展</p><p></p>
+<p></p><p>3. 分别定义一个起点, 一个终点的结构体属性 . 在建立一个存储路径的数组</p><p></p>
+<p></p><p>&nbsp;</p><p></p>
+<div class="cnblogs_code"><br><pre><span style="color: #000000;">@interface DrawView ()<br>{<br>    CGPoint _startPoint;<br>    CGPoint _endPoint;<br>}<br><br>@property (nonatomic, strong) NSMutableArray </span><em><span style="color: #000000;">pathArray;<br><br>@end</span></em></pre><br></div><br><p>&nbsp;</p><br><p>4. 懒加载数组</p><br><div class="cnblogs_code"><br><pre>- (NSMutableArray <span style="color: #000000;">)pathArray<br>{<br>    </span><span style="color: #0000ff;">if</span> (_pathArray ==<span style="color: #000000;"> nil) {<br>        _pathArray </span>=<span style="color: #000000;"> [NSMutableArray array];<br>    }<br>    </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> _pathArray;<br>}</span></pre><br></div><br><p>5. 开始绘制</p><br><p>(1) 起点</p><br><div class="cnblogs_code"><br><pre>- (<span style="color: #0000ff;">void</span>)touchesBegan:(NSSet&lt;UITouch <em>&gt; </em>)touches withEvent:(UIEvent <em>)<span style="color: #0000ff;">event</span><span style="color: #000000;"><br>{<br>    </span><span style="color: #008000;">//</span><span style="color: #008000;"> 获取起点</span><br>    _startPoint =<span style="color: #000000;"> [[touches anyObject] locationInView:self];<br><br>    </span><span style="color: #008000;">//</span><span style="color: #008000;"> 创建贝瑟尔路径</span><br>    UIBezierPath </em>path =<span style="color: #000000;"> [UIBezierPath bezierPath];<br>    </span><span style="color: #008000;">//</span><span style="color: #008000;"> 起点</span><br><span style="color: #000000;">    [path moveToPoint:_startPoint];<br><br>    </span><span style="color: #008000;">//</span><span style="color: #008000;"> 添加到数组中</span><br><span style="color: #000000;">    [self.pathArray addObject:path];<br><br><br>}</span></pre><br></div><br><p>(2) 终点</p><br><div class="cnblogs_code"><br><pre>- (<span style="color: #0000ff;">void</span>)touchesMoved:(NSSet&lt;UITouch <em>&gt; </em>)touches withEvent:(UIEvent <em>)<span style="color: #0000ff;">event</span><span style="color: #000000;"><br>{<br>    _endPoint </span>=<span style="color: #000000;"> [[touches anyObject] locationInView:self];<br><br>    </span><span style="color: #008000;">//</span><span style="color: #008000;"> 终点</span><br>    UIBezierPath </em>path =<span style="color: #000000;"> [self.pathArray lastObject];<br><br>    [path addLineToPoint:_endPoint];<br><br>    [self setNeedsDisplay];<br>}</span></pre><br></div><br><p>6. 重写 &nbsp;- (void)drawRect:(CGRect)rect 方法</p><br><div class="cnblogs_code"><br><pre>- (<span style="color: #0000ff;">void</span><span style="color: #000000;">)drawRect:(CGRect)rect {<br>    </span><span style="color: #008000;">//</span><span style="color: #008000;"> Drawing code</span><br><br>    <span style="color: #0000ff;">for</span> (UIBezierPath <em>path <span style="color: #0000ff;">in</span><span style="color: #000000;"> self.pathArray) {<br>        </span><span style="color: #008000;">//</span><span style="color: #008000;"> 设置颜色</span><br>        [[UIColor orangeColor] <span style="color: #0000ff;">set</span><span style="color: #000000;">];<br>        </span><span style="color: #008000;">//</span><span style="color: #008000;"> 设置粗度</span><br>        path.lineWidth = <span style="color: #800080;">10</span><span style="color: #000000;">;<br>        </span><span style="color: #008000;">//</span><span style="color: #008000;"> 渲染</span><br><span style="color: #000000;">        [path stroke];<br>    }<br><br><br>}</span></em></pre><br></div><br><p>二. 绘制饼状图</p><br><p>注 : 为了好看, 我随即分成了大小颜色都不同的99份</p><br><p>代码实现</p><br><div class="cnblogs_code"><br><pre>#import <span style="color: #800000;">“</span><span style="color: #800000;">DrawView.h</span><span style="color: #800000;">“</span><br><br><span style="color: #0000ff;">#define</span> kcolor arc4random()% 256 / 255.0<span style="color: #000000;"><br><br>@implementation DrawView<br><br><br></span><span style="color: #008000;">//</span><span style="color: #008000;"> Only override drawRect: if you perform custom drawing.<br></span><span style="color: #008000;">//</span><span style="color: #008000;"> An empty implementation adversely affects performance during animation.</span><br>- (<span style="color: #0000ff;">void</span><span style="color: #000000;">)drawRect:(CGRect)rect {<br>    </span><span style="color: #008000;">//</span><span style="color: #008000;"> Drawing code</span><br><span style="color: #000000;"><br>    NSMutableArray </span>array =<span style="color: #000000;"> [NSMutableArray array];<br>    </span><span style="color: #0000ff;">int</span> sum = <span style="color: #800080;">0</span><span style="color: #000000;">;<br>    </span><span style="color: #0000ff;">for</span> (<span style="color: #0000ff;">int</span> i = <span style="color: #800080;">1</span>; i&lt; <span style="color: #800080;">100</span>; i ++<span style="color: #000000;">) {<br>        </span><span style="color: #0000ff;">int</span> num = arc4random()% <span style="color: #800080;">100</span><span style="color: #000000;"> ;<br>        sum </span>+=<span style="color: #000000;"> num;<br>        NSNumber </span><em>number =<span style="color: #000000;"> [NSNumber numberWithInt:num];<br>        [array addObject:number];<br>    }<br>    </span><span style="color: #008000;">//</span><span style="color: #008000;"> 记录起点和终点</span><br>    CGFloat start = <span style="color: #800080;">0</span><span style="color: #000000;">;<br>    CGFloat end </span>= <span style="color: #800080;">0</span><span style="color: #000000;">;<br>    </span><span style="color: #008000;">//</span><span style="color: #008000;"> 遍历数据</span><br>    <span style="color: #0000ff;">for</span> (NSNumber </em>num <span style="color: #0000ff;">in</span><span style="color: #000000;"> array) {<br><br>        end </span>= num.floatValue / sum <em> M_PI </em> <span style="color: #800080;">2</span><span style="color: #000000;">;<br><br>        UIBezierPath </span><em>path = [UIBezierPath bezierPathWithArcCenter:CGPointMake(<span style="color: #800080;">150</span>, <span style="color: #800080;">150</span>) radius:<span style="color: #800080;">100</span> startAngle:start endAngle:start +<span style="color: #000000;"> end clockwise:YES];<br>        </span><span style="color: #008000;">//</span><span style="color: #008000;"> 关闭路径</span><br>        [path addLineToPoint:CGPointMake(<span style="color: #800080;">150</span>, <span style="color: #800080;">150</span><span style="color: #000000;">)];<br><br>        [[UIColor colorWithRed:kcolor green:kcolor blue:kcolor alpha:</span><span style="color: #800080;">1</span>] <span style="color: #0000ff;">set</span><span style="color: #000000;">];<br>        [path closePath];<br>        [path fill];<br>        start </span>+=<span style="color: #000000;"> end;<br><br><br>    }<br></span></em></pre><br><p>@end</p><br><pre><span style="color: #000000;">&nbsp;</span></pre><br></div><br><p>三. 截图用法</p><br><p>1. 首先要有一个imageView, 所以在ViewContorller先建立一个UIImageView的属性 将背景的图片设置出来</p><br><p>2. 建立一个继承自UIView的类</p><br><p>3. 在这个UIView类.m里实现截图 (.h中写了一个block块用于传递路径)</p><br><p>.h 代码实现</p><br><div class="cnblogs_code"><br><pre><span style="color: #008000;">//</span><span style="color: #008000;"> 传递路径</span><br>typedef <span style="color: #0000ff;">void</span>(^block)(UIBezierPath <span style="color: #000000;">p);<br><br>@interface MyView : UIView<br><br>@property (nonatomic, copy) block myblock;<br><br>@end</span></pre><br></div><br><p>.m 代码实现&nbsp;</p><br><div class="cnblogs_code"><br><pre>#import <span style="color: #800000;">“</span><span style="color: #800000;">MyView.h</span><span style="color: #800000;">“</span><span style="color: #000000;"><br><br>@interface MyView ()<br><br></span><span style="color: #008000;">//</span><span style="color: #008000;"> 保存路径</span><br>@property (nonatomic, strong) NSMutableArray <em><span style="color: #000000;">pathArray;<br><br>@end<br><br>@implementation MyView<br><br></span>- (NSMutableArray </em><span style="color: #000000;">)pathArray<br>{<br>    </span><span style="color: #0000ff;">if</span> (!<span style="color: #000000;"> _pathArray) {<br>        _pathArray </span>=<span style="color: #000000;"> [NSMutableArray array];<br>    }<br>    </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> _pathArray;<br>}<br><br></span>- (<span style="color: #0000ff;">void</span>)touchesBegan:(NSSet&lt;UITouch <em>&gt; </em>)touches withEvent:(UIEvent <em>)<span style="color: #0000ff;">event</span><span style="color: #000000;"><br>{<br>    </span><span style="color: #008000;">//</span><span style="color: #008000;"> 1. 获取起始点 并且创建路径</span><br>    UIBezierPath </em>path =<span style="color: #000000;"> [UIBezierPath bezierPath];<br>    [path moveToPoint:[[touches anyObject] locationInView:self]];<br><br>    </span><span style="color: #008000;">//</span><span style="color: #008000;"> 2. 装入数组</span><br><span style="color: #000000;">    [self.pathArray addObject:path];<br><br>}<br><br></span>- (<span style="color: #0000ff;">void</span>)touchesMoved:(NSSet&lt;UITouch <em>&gt; </em>)touches withEvent:(UIEvent <em>)<span style="color: #0000ff;">event</span><span style="color: #000000;"><br>{<br>    </span><span style="color: #008000;">//</span><span style="color: #008000;"> 1. 获取终点 (不止一个)</span><br>    UIBezierPath </em>path =<span style="color: #000000;"> [self.pathArray lastObject];<br>    [path addLineToPoint:[[touches anyObject] locationInView:self]];<br><br>    </span><span style="color: #008000;">//</span><span style="color: #008000;"> 2. 调用drawrect</span><br><span style="color: #000000;">    [self setNeedsDisplay];<br><br>}<br><br><br></span>- (<span style="color: #0000ff;">void</span>)touchesEnded:(NSSet&lt;UITouch <em>&gt; </em>)touches withEvent:(UIEvent <em>)<span style="color: #0000ff;">event</span><span style="color: #000000;"><br>{<br>    </span><span style="color: #008000;">//</span><span style="color: #008000;"> 封闭路径</span><br>    UIBezierPath </em>path =<span style="color: #000000;"> [self.pathArray lastObject];<br>    [path closePath];<br><br>    [self setNeedsDisplay];<br>    </span><span style="color: #008000;">//</span><span style="color: #008000;"> 调用block路径</span><br><span style="color: #000000;">    self.myblock(path);<br>}<br><br><br></span><span style="color: #008000;">//</span><span style="color: #008000;"> Only override drawRect: if you perform custom drawing.<br></span><span style="color: #008000;">//</span><span style="color: #008000;"> An empty implementation adversely affects performance during animation.</span><br>- (<span style="color: #0000ff;">void</span><span style="color: #000000;">)drawRect:(CGRect)rect {<br>    </span><span style="color: #008000;">//</span><span style="color: #008000;"> Drawing code</span><br>    <span style="color: #0000ff;">for</span> (UIBezierPath <em>path <span style="color: #0000ff;">in</span><span style="color: #000000;"> self.pathArray) {<br>        path.lineWidth </span>= <span style="color: #800080;">2</span><span style="color: #000000;">;<br>        [[UIColor orangeColor] </span><span style="color: #0000ff;">set</span><span style="color: #000000;">];<br>        [path stroke];<br><br>    }<br>}<br><br><br>@end</span></em></pre><br></div><br><p>&nbsp;</p><br><p>4. 在ViewController中中回调路径</p><br><div class="cnblogs_code"><br><pre>#import <span style="color: #800000;">“</span><span style="color: #800000;">ViewController.h</span><span style="color: #800000;">“</span><span style="color: #000000;"><br><br>#import </span><span style="color: #800000;">“</span><span style="color: #800000;">MyImageView.h</span><span style="color: #800000;">“</span><span style="color: #000000;"><br><br>#import </span><span style="color: #800000;">“</span><span style="color: #800000;">MyView.h</span><span style="color: #800000;">“</span><span style="color: #000000;"><br><br><br><br>@interface ViewController ()<br><br>@property (nonatomic, strong) UIImageView </span><span style="color: #000000;">imageView;<br><br>@property (nonatomic, strong) MyView </span><em><span style="color: #000000;">myView;<br><br>@end<br><br>@implementation ViewController<br><br></span>- (<span style="color: #0000ff;">void</span><span style="color: #000000;">)viewDidLoad {<br>    [super viewDidLoad];<br>    </span><span style="color: #008000;">//</span><span style="color: #008000;"> 获取图片<br>    </span><span style="color: #008000;">//</span><span style="color: #008000;"> <strong>block全局区</strong></span>
+   block UIImage </em>image = [UIImage imageNamed:<span style="color: #800000;">@”</span><span style="color: #800000;">0</span><span style="color: #800000;">“</span><span style="color: #000000;">];<br>    self.imageView </span>=<span style="color: #000000;"> [[UIImageView alloc] initWithImage:image];<br>    _imageView.frame </span>= CGRectMake(<span style="color: #800080;">7</span>, <span style="color: #800080;">160</span><span style="color: #000000;">, image.size.width, image.size.height);<br>    [self.view addSubview: _imageView];<br><br>    self.myView </span>=<span style="color: #000000;"> [[MyView alloc] initWithFrame:self.imageView.frame];<br>    _myView.backgroundColor </span>= [UIColor colorWithRed:<span style="color: #800080;">1</span> green:<span style="color: #800080;">1</span> blue:<span style="color: #800080;">1</span> alpha:<span style="color: #800080;">0</span><span style="color: #000000;">];<br>    [self.view addSubview:_myView];<br><br>    </span><span style="color: #008000;">//</span><span style="color: #008000;"> 剪切</span><br><span style="color: #000000;"><br>    __weak </span><span style="color: #0000ff;">typeof</span>(self) weakSelf =<span style="color: #000000;"> self;<br>    _myView.myblock </span>= ^(UIBezierPath <em><span style="color: #000000;">p){<br><br>        </span><span style="color: #008000;">//</span><span style="color: #008000;"> 获取上下文</span><br>        UIGraphicsBeginImageContextWithOptions(image.size, NO, <span style="color: #800080;">0</span><span style="color: #000000;">);<br>        </span><span style="color: #008000;">//</span><span style="color: #008000;"> 路径</span><br>        UIBezierPath </em>path =<span style="color: #000000;"> p;<br>        </span><span style="color: #008000;">//</span><span style="color: #008000;"> 剪切</span><br><span style="color: #000000;">        [path addClip];<br>        </span><span style="color: #008000;">//</span><span style="color: #008000;"> 绘制</span><br><span style="color: #000000;">        [image drawAtPoint:CGPointZero];<br>        </span><span style="color: #008000;">//</span><span style="color: #008000;"> 获取剪切后的图片</span><br>        image =<span style="color: #000000;"> UIGraphicsGetImageFromCurrentImageContext();<br>        </span><span style="color: #008000;">//</span><span style="color: #008000;"> 结束上下文</span><br><span style="color: #000000;">        UIGraphicsEndImageContext();<br>        </span><span style="color: #008000;">//</span><span style="color: #008000;"> 给imageView赋值</span><br>        weakSelf.imageView.image =<span style="color: #000000;"> image;<br><br>    };<br>}<br><br>@end</span></pre><br></div>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/QuartZ2D/" rel="tag">#QuartZ2D</a>
+          
+        </div>
+      
+
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://tp1.sinaimg.cn/3699928344/180/5675461571/1"
+               alt="yawang" />
+          <p class="site-author-name" itemprop="name">yawang</p>
+          <p class="site-description motion-element" itemprop="description">我可以划船不用桨 因为我全靠浪</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yawang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=0.5.0"></script>
+
+
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.sidebar.display === 'post' || CONFIG.sidebar.display === 'always') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>
